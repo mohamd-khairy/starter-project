@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Socket.IO Event Listener</title>
+    </head>
+
+    <body>
+        <h1>Socket.IO Event Listener</h1>
+        <img id="image" alt="" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+        <script>
+            const host = window.location.origin;
+            // Establish a connection to the Socket.IO server
+            const socket = io(host); // Replace with your server URL
+
+            // Listen for the customEvent event
+            socket.on("itemAdded", (data) => {
+                console.log("Received itemAdded:", data);
+                const { image } = data;
+                let img = (document.getElementById("image").src = image);
+                // Handle the event data here
+            });
+        </script>
+    </body>
+</html>

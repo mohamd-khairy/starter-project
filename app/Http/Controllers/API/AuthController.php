@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Enums\StatusEnum;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class AuthController extends Controller
+{
+    public function login(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            return responseFail($validate->messages()->first());
+        }
+
+        $data = $request->only('email', 'password');
+
+        if (!auth()->attempt($data)) {
+            return responseFail('Email & Password does not match with our record.');
+        }
+
+        $user = User::with([
+            'roles',
+            'roles.permissions:name',
+            'locations:id,name'
+        ])->where('email', $request->email)->first();
+
+        if ($user->status == StatusEnum::notactive) {
+            return responseFail('This account is not active to login');
+        }
+
+        $user->update(['last_login' => now()]);
+
+        return responseSuccess([
+            'token' => $user->createToken("API TOKEN")->plainTextToken,
+            'user' => new UserResource($user),
+        ], 'User Logged In Successfully');
+    }
+
+    public function user()
+    {
+        $user = User::with([
+            'roles',
+            'roles.permissions:name',
+            'locations:id,name'
+        ])->find(auth()->id());
+
+        return responseSuccess(new UserResource($user), 'User Logged In Successfully');
+    }
+
+    public function logout()
+    {
+        $user = User::find(auth()->id());
+        $user->tokens()->where('id', auth()->user()->currentAccessToken()->id)->delete();
+        return responseSuccess([], 'User Logged Out Successfully');
+    }
+}
