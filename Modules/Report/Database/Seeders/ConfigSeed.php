@@ -37,7 +37,11 @@ class ConfigSeed extends Seeder
 
             foreach (['Detection'] as $model) {
                 $drafts = [];
-                $site_id = $user->locations->pluck('id')->toArray();
+                try {
+                    $site_id = $user->locations->pluck('id')->toArray();
+                } catch (\Throwable $th) {
+                    $site_id = [];
+                }
 
                 $reports = \config("report.models.$model.reports");
                 foreach ($reports ?? [] as $key => $report) {

@@ -32,7 +32,6 @@ class AuthController extends Controller
         $user = User::with([
             'roles',
             'roles.permissions:name',
-            'locations:id,name'
         ])->where('email', $request->email)->first();
 
         if ($user->status == StatusEnum::notactive) {
@@ -52,7 +51,6 @@ class AuthController extends Controller
         $user = User::with([
             'roles',
             'roles.permissions:name',
-            'locations:id,name'
         ])->find(auth()->id());
 
         return responseSuccess(new UserResource($user), 'User Logged In Successfully');

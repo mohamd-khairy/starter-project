@@ -17,7 +17,7 @@ class CreateArchiveFilesTable extends Migration
             $table->id();
             $table->string('start');
             $table->string('end');
-            $table->foreignId('location_id')->constrained('locations');
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->string('type');
             $table->string('model_type');
             $table->string('url',250)->nullable();

@@ -22,6 +22,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->text('address1')->nullable();
+            $table->text('address2')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->text('website')->nullable();
+            $table->string('city')->nullable();
+            $table->string('region')->nullable();
+            $table->string('country')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->enum('status', ['active', 'notactive'])->default('active');
+            $table->timestamp('last_login')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

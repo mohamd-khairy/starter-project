@@ -40,7 +40,7 @@ class UserController extends Controller
 
         $page_size = request('pageSize', 15);
 
-        $users = User::with(['roles', 'permissions', 'locations'])->whereHas('roles', function ($q) {
+        $users = User::with(['roles', 'permissions'])->whereHas('roles', function ($q) {
             $q->where('name', '!=', 'root'); //->where('name', '!=', 'admin');
         })->where('id', '!=', auth()->id());
 
@@ -82,8 +82,6 @@ class UserController extends Controller
             'username' => 'required|string|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'avatar' => 'image|mimes:png,jpg,jpeg',
-            // 'locations' => 'required|array',
-            // 'locations.*' => 'required|exists:locations,id',
         ]);
 
         if ($validate->fails()) {
@@ -101,11 +99,6 @@ class UserController extends Controller
 
         $user->assignRole('admin');
 
-        if (request('locations')) {
-            $locations = is_array(request('locations', [])) ? request('locations', []) : explode(',', request('locations', ''));
-            $user->locations()->sync($locations);
-        }
-
         return responseSuccess($user, 'User has been successfully created');
     }
 
@@ -117,7 +110,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::with('locations')->findOrFail($id);
+        $user = User::findOrFail($id);
 
         return responseSuccess($user);
     }
@@ -138,9 +131,6 @@ class UserController extends Controller
             'username' => 'nullable|string|unique:users,username,' . $id,
             'email' => 'nullable|email|unique:users,email,' . $id,
             'avatar' => 'nullable|image|' . v_image(),
-            // 'locations' => 'nullable|array',
-            // 'locations.*' => 'nullable|exists:locations,id',
-
             'address1' => 'nullable|string',
             'address2' => 'nullable|string',
             'postal_code' => 'nullable|string',
@@ -168,11 +158,6 @@ class UserController extends Controller
         }
 
         $user->update($data);
-
-        if (request('locations')) {
-            $locations = is_array(request('locations', [])) ? request('locations', []) : explode(',', request('locations', ''));
-            $user->locations()->sync($locations);
-        }
 
         return responseSuccess($user, 'User has been successfully updated');
     }

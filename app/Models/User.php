@@ -60,14 +60,4 @@ class User extends Authenticatable implements MustVerifyEmail
             return url('storage/' . $value);
         }
     }
-
-    public function locations()
-    {
-        return $this->belongsToMany(Location::class, 'user_locations')->withPivot('live_mode');
-    }
-
-    public function sites()
-    {
-        return $this->belongsToMany(Location::class, 'user_locations')->withPivot('live_mode');
-    }
 }
