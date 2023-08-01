@@ -217,6 +217,10 @@ export default {
   background: none !important;
 }
 
+.v-menu__content .theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+  color: #000 !important;
+}
+
 .theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
   color: #fff !important;
 }
