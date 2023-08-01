@@ -93,7 +93,6 @@ router.beforeEach((to, from, next) => {
     let isAllowed = localStorage.getItem('user_permissions').includes(to.meta.permissions)
     if (!isAllowed) return next('auth-signin')
   }
-  console.log("Route: ", i18n.t(to.meta.title));
   document.title = i18n.t(`menu.${to.meta.title}`)
   return next();
 });

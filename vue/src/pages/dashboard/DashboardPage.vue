@@ -35,7 +35,7 @@
         <v-row align="center" justify="center">
           <v-col cols="12" align="center" justify="center">
             <div class="py-3">
-              <img src="../../assets/images/empty-box.png" alt="No Data" width="300">
+              <img src="../../assets/images/demo/empty-box.png" alt="No Data" width="300">
               <h3 class="mb-3">{{ $t("general.no_data_available") }}</h3>
             </div>
           </v-col>
