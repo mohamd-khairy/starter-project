@@ -1,33 +1,15 @@
 <template>
-  <div
-    v-shortkey="['ctrl', '/']"
-    class="d-flex flex-grow-1"
-    @shortkey="onKeyup"
-  >
+  <div v-shortkey="['ctrl', '/']" class="d-flex flex-grow-1" @shortkey="onKeyup">
     <!-- Navigation -->
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      floating
-      class="elevation-0 navigation-cont"
-      :right="$vuetify.rtl"
-      :light="menuTheme === 'light'"
-      :dark="menuTheme === 'dark'"
-    >
+    <v-navigation-drawer v-model="drawer" app floating class="elevation-0 navigation-cont" :right="$vuetify.rtl"
+      :light="menuTheme === 'light'" :dark="menuTheme === 'dark'">
       <!-- Navigation menu info -->
       <template v-slot:prepend>
         <div class="px-2 pt-2" style="height: 80px">
-          <div
-            class="title font-weight-bold text-center text-uppercase primary--text "
-            style="height: 100%;"
-          >
+          <div class="title font-weight-bold text-center text-uppercase primary--text " style="height: 100%;">
             <!--            {{ product.name }}-->
-            <img
-              :class="!websiteLogo ? 'd-none' : ''"
-              :src="websiteLogo"
-              :alt="websiteName"
-              style="max-width: 85%; height: auto;max-height: 90%; object-fit: contain;"
-            />
+            <img :class="!websiteLogo ? 'd-none' : ''" :src="websiteLogo" :alt="websiteName"
+              style="max-width: 85%; height: auto;max-height: 90%; object-fit: contain;" />
           </div>
           <!--          <div class="overline grey&#45;&#45;text">{{ product.version }}</div>-->
         </div>
@@ -40,14 +22,8 @@
       <template v-slot:append>
         <!-- Footer navigation links -->
         <div class="pa-1 text-center">
-          <v-btn
-            v-for="(item, index) in navigation.footer"
-            :key="index"
-            :href="item.href"
-            :target="item.target"
-            small
-            text
-          >
+          <v-btn v-for="(item, index) in navigation.footer" :key="index" :href="item.href" :target="item.target" small
+            text>
             {{ item.key ? $t(item.key) : item.text }}
           </v-btn>
         </div>
@@ -55,27 +31,13 @@
     </v-navigation-drawer>
 
     <!-- Toolbar -->
-    <v-app-bar
-      app
-      flat
-      outlined
-      prominent
-      shrink-on-scroll
-      :color="isToolbarDetached ? 'surface' : undefined"
-      :light="toolbarTheme === 'light'"
-      :dark="toolbarTheme === 'dark'"
-      :height="breadcrumbs.length > 1 ? 40 : 90"
-    >
-      <v-card
-        class="flex-grow-1 d-flex fill-height"
-        :class="[isToolbarDetached ? 'pa-1 mt-3 mx-1' : 'pa-0 ma-0']"
-        :flat="!isToolbarDetached"
-      >
+    <v-app-bar app flat outlined prominent shrink-on-scroll :color="isToolbarDetached ? 'surface' : undefined"
+      :light="toolbarTheme === 'light'" :dark="toolbarTheme === 'dark'" :height="breadcrumbs.length > 1 ? 40 : 90">
+      <v-card class="flex-grow-1 d-flex fill-height" :class="[isToolbarDetached ? 'pa-1 mt-3 mx-1' : 'pa-0 ma-0']"
+        :flat="!isToolbarDetached">
         <div class="d-flex flex-grow-1 align-center">
           <div class="d-flex flex-grow-1 align-start fill-height">
-            <v-app-bar-nav-icon
-              @click.stop="drawer = !drawer"
-            ></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-app-bar-title>{{ pageTitle }}</v-app-bar-title>
 
             <!-- <v-spacer class="d-none d-lg-block"></v-spacer>
@@ -111,12 +73,7 @@
         <v-spacer></v-spacer>
         <div class="overline">
           Built with <v-icon small color="pink">mdi-heart</v-icon>
-          <a
-            class="text-decoration-none"
-            href="https://wakeb.tech"
-            target="_blank"
-            >Wakeb</a
-          >
+          <a class="text-decoration-none" href="https://wakeb.tech" target="_blank"> Wakeb</a>
         </div>
       </v-footer>
     </v-main>
